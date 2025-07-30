@@ -14,7 +14,6 @@ export default function DynamicIslandWidget() {
   const [hoveredMenuItem, setHoveredMenuItem] = useState<string | null>(null)
   const [isPlusRotating, setIsPlusRotating] = useState(false)
   const [isDotsJumping, setIsDotsJumping] = useState(false)
-  const [isMenuExpanded, setIsMenuExpanded] = useState(false)
   
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   
@@ -64,7 +63,7 @@ export default function DynamicIslandWidget() {
     }
   }, [isDotsJumping])
 
-  // Clean iOS animations
+  // Clean iOS animations with improved layout
   const containerVariants = {
     collapsed: { 
       width: 'auto',
@@ -76,7 +75,7 @@ export default function DynamicIslandWidget() {
     },
     audio: {
       width: 'auto', 
-      transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] }
+      transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] }
     },
     menu: {
       width: 'auto',
@@ -184,7 +183,7 @@ export default function DynamicIslandWidget() {
               <motion.button
                 variants={itemVariants}
                 onClick={handlePersonClick}
-                className="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-white hover:bg-opacity-10 transition-all duration-200"
+                className="flex items-center gap-3 px-3 py-2 rounded-full"
                 whileTap={{ scale: 0.95 }}
                 disabled={isTransitioning}
               >
@@ -192,7 +191,7 @@ export default function DynamicIslandWidget() {
                   <User className="ios-icon w-3.5 h-3.5 text-white" />
                 </div>
                 <div className="text-left">
-                  <div className="text-white text-ios-caption opacity-70">Hello</div>
+                  <div className="text-white text-ios-caption opacity-70">Hello I'm</div>
                   <div className="text-white text-ios-footnote font-medium">Salman</div>
                 </div>
               </motion.button>
@@ -231,7 +230,7 @@ export default function DynamicIslandWidget() {
                   </div>
                 </motion.button>
 
-                {/* Menu Button */}
+                {/* Menu Button - With 3-Dot Bounce Animation */}
                 <motion.button
                   variants={itemVariants}
                   className="ios-button w-9 h-9 rounded-full flex items-center justify-center bg-ios-orange"
@@ -265,7 +264,7 @@ export default function DynamicIslandWidget() {
             </motion.div>
           )}
 
-          {/* Audio State - Integrated Dynamic Island Design */}
+          {/* Audio State - Integrated Story Display */}
           {state === 'audio' && (
             <motion.div
               key="audio"
@@ -275,9 +274,8 @@ export default function DynamicIslandWidget() {
               exit="exit"
               className="flex items-center gap-4"
             >
-              {/* Audio Visualization */}
               <motion.div 
-                className="flex items-center gap-6 px-4 py-3"
+                className="flex items-center gap-4 px-4 py-3"
                 variants={itemVariants}
               >
                 {/* Wave Animation */}
@@ -300,15 +298,17 @@ export default function DynamicIslandWidget() {
                   ))}
                 </div>
                 
-                {/* Audio Info */}
+                {/* Compact Story Info */}
                 <div className="flex items-center gap-3">
-                  <div className="text-left">
-                    <div className="text-white text-ios-caption opacity-70">Now Playing</div>
-                    <div className="text-white text-ios-footnote font-medium">Developer Story</div>
+                  <div className="text-left max-w-xs">
+                    <div className="text-white text-ios-caption opacity-70">About Me</div>
+                    <div className="text-white text-ios-footnote font-medium leading-tight">
+                      DevOps engineer passionate about automation, CI/CD, cloud infrastructure & system reliability.
+                    </div>
                   </div>
                   
                   <motion.button
-                    className="ios-button w-7 h-7 rounded-full flex items-center justify-center"
+                    className="ios-button w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
                     onClick={handleAudioReturn}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -319,7 +319,7 @@ export default function DynamicIslandWidget() {
             </motion.div>
           )}
 
-          {/* Menu State - Auto-Expanding with Labels */}
+          {/* Menu State - Individual Icon Hover Expand */}
           {state === 'menu' && (
             <motion.div
               key="menu"
@@ -327,15 +327,13 @@ export default function DynamicIslandWidget() {
               initial="exit"
               animate="enter"
               exit="exit"
-              className="flex items-center gap-3"
-              onHoverStart={() => setIsMenuExpanded(true)}
-              onHoverEnd={() => setIsMenuExpanded(false)}
+              className="flex items-center gap-2"
             >
               {[
                 { id: 'back', icon: ArrowLeft, label: 'Back', action: handleBackClick },
-                { id: 'cv', icon: FileText, label: 'CV', href: '/cv.pdf' },
-                { id: 'github', icon: Github, label: 'GitHub', href: 'https://github.com/salman' },
-                { id: 'linkedin', icon: FaLinkedin, label: 'LinkedIn', href: 'https://linkedin.com/in/salman' },
+                { id: 'cv', icon: FileText, label: 'Read CV', href: 'https://resume.salmanfrs.dev/' },
+                { id: 'github', icon: Github, label: 'GitHub', href: 'https://github.com/salman-frs/' },
+                { id: 'linkedin', icon: FaLinkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/salman-frs/' },
               ].map((item, index) => (
                 <motion.div
                   key={item.id}
@@ -347,32 +345,27 @@ export default function DynamicIslandWidget() {
                     <motion.a
                       href={item.href}
                       target="_blank"
-                      className="ios-button rounded-full flex items-center justify-center gap-2"
-                      style={{
-                        width: isMenuExpanded ? 'auto' : '32px',
-                        height: '32px',
-                        paddingLeft: isMenuExpanded ? '12px' : '0',
-                        paddingRight: isMenuExpanded ? '12px' : '0'
-                      }}
+                      className="ios-button rounded-full flex items-center justify-center gap-2 overflow-hidden"
                       animate={{
-                        width: isMenuExpanded ? 'auto' : '32px',
-                        paddingLeft: isMenuExpanded ? 12 : 0,
-                        paddingRight: isMenuExpanded ? 12 : 0
+                        width: hoveredMenuItem === item.id ? 'auto' : '32px',
+                        paddingLeft: hoveredMenuItem === item.id ? 12 : 0,
+                        paddingRight: hoveredMenuItem === item.id ? 12 : 0
                       }}
-                      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                       onHoverStart={() => setHoveredMenuItem(item.id)}
                       onHoverEnd={() => setHoveredMenuItem(null)}
                       whileTap={{ scale: 0.9 }}
+                      style={{ height: '32px' }}
                     >
                       <item.icon className="ios-icon w-4 h-4 text-white flex-shrink-0" />
                       <AnimatePresence>
-                        {isMenuExpanded && (
+                        {hoveredMenuItem === item.id && (
                           <motion.span
                             initial={{ opacity: 0, width: 0 }}
                             animate={{ opacity: 1, width: 'auto' }}
                             exit={{ opacity: 0, width: 0 }}
-                            transition={{ duration: 0.2, delay: 0.1 }}
-                            className="text-white text-ios-caption font-medium whitespace-nowrap overflow-hidden"
+                            transition={{ duration: 0.2, delay: 0.05 }}
+                            className="text-white text-ios-caption font-medium whitespace-nowrap ml-2"
                           >
                             {item.label}
                           </motion.span>
@@ -381,34 +374,29 @@ export default function DynamicIslandWidget() {
                     </motion.a>
                   ) : (
                     <motion.button
-                      className="ios-button rounded-full flex items-center justify-center gap-2"
-                      style={{
-                        width: isMenuExpanded ? 'auto' : '32px',
-                        height: '32px',
-                        paddingLeft: isMenuExpanded ? '12px' : '0',
-                        paddingRight: isMenuExpanded ? '12px' : '0'
-                      }}
+                      className="ios-button rounded-full flex items-center justify-center gap-2 overflow-hidden"
                       animate={{
-                        width: isMenuExpanded ? 'auto' : '32px',
-                        paddingLeft: isMenuExpanded ? 12 : 0,
-                        paddingRight: isMenuExpanded ? 12 : 0
+                        width: hoveredMenuItem === item.id ? 'auto' : '32px',
+                        paddingLeft: hoveredMenuItem === item.id ? 12 : 0,
+                        paddingRight: hoveredMenuItem === item.id ? 12 : 0
                       }}
-                      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                       onClick={item.action}
                       onHoverStart={() => setHoveredMenuItem(item.id)}
                       onHoverEnd={() => setHoveredMenuItem(null)}
                       whileTap={{ scale: 0.9 }}
                       disabled={isTransitioning}
+                      style={{ height: '32px' }}
                     >
                       <item.icon className="ios-icon w-4 h-4 text-white flex-shrink-0" />
                       <AnimatePresence>
-                        {isMenuExpanded && (
+                        {hoveredMenuItem === item.id && (
                           <motion.span
                             initial={{ opacity: 0, width: 0 }}
                             animate={{ opacity: 1, width: 'auto' }}
                             exit={{ opacity: 0, width: 0 }}
-                            transition={{ duration: 0.2, delay: 0.1 }}
-                            className="text-white text-ios-caption font-medium whitespace-nowrap overflow-hidden"
+                            transition={{ duration: 0.2, delay: 0.05 }}
+                            className="text-white text-ios-caption font-medium whitespace-nowrap ml-2"
                           >
                             {item.label}
                           </motion.span>
