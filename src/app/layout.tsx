@@ -3,7 +3,12 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Salman Portfolio',
-  description: 'Interactive portfolio website',
+  description: 'Interactive portfolio website with Dynamic Island widget',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({

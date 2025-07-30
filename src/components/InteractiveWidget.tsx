@@ -14,14 +14,17 @@ export default function DynamicIslandWidget() {
   const [hoveredMenuItem, setHoveredMenuItem] = useState<string | null>(null)
   const [isPlusRotating, setIsPlusRotating] = useState(false)
   const [isDotsJumping, setIsDotsJumping] = useState(false)
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   
   // Cleanup timeouts
   useEffect(() => {
     const timeout = timeoutRef.current
+    const hoverTimeout = hoverTimeoutRef.current
     return () => {
       if (timeout) clearTimeout(timeout)
+      if (hoverTimeout) clearTimeout(hoverTimeout)
     }
   }, [])
 
@@ -63,6 +66,24 @@ export default function DynamicIslandWidget() {
       setTimeout(() => setIsDotsJumping(false), 800)
     }
   }, [isDotsJumping])
+
+  const handleMenuItemHover = useCallback((itemId: string) => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredMenuItem(itemId)
+    }, 50) // 50ms delay for smoother transitions
+  }, [])
+
+  const handleMenuItemLeave = useCallback(() => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredMenuItem(null)
+    }, 100) // 100ms delay to prevent flickering
+  }, [])
 
   // Clean iOS animations with improved layout
   const containerVariants = {
@@ -354,12 +375,14 @@ export default function DynamicIslandWidget() {
                         paddingRight: hoveredMenuItem === item.id ? 12 : 8
                       }}
                       transition={{ 
-                        duration: 0.2, 
-                        ease: [0.25, 0.1, 0.25, 1],
-                        type: "tween"
+                        duration: 0.3, 
+                        ease: [0.16, 1, 0.3, 1],
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 30
                       }}
-                      onHoverStart={() => setHoveredMenuItem(item.id)}
-                      onHoverEnd={() => setHoveredMenuItem(null)}
+                      onMouseEnter={() => handleMenuItemHover(item.id)}
+                      onMouseLeave={handleMenuItemLeave}
                       whileTap={{ 
                         scale: 0.92,
                         transition: { duration: 0.1 }
@@ -375,12 +398,15 @@ export default function DynamicIslandWidget() {
                       <AnimatePresence mode="wait">
                         {hoveredMenuItem === item.id && (
                           <motion.span
-                            initial={{ opacity: 0, x: -8 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -8 }}
+                            initial={{ opacity: 0, x: -6, scale: 0.9 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
+                            exit={{ opacity: 0, x: -6, scale: 0.9 }}
                             transition={{ 
-                              duration: 0.15,
-                              ease: [0.25, 0.1, 0.25, 1]
+                              duration: 0.25,
+                              ease: [0.16, 1, 0.3, 1],
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 25
                             }}
                             className="text-white text-ios-caption font-medium whitespace-nowrap ml-2"
                             style={{
@@ -403,13 +429,15 @@ export default function DynamicIslandWidget() {
                         paddingRight: hoveredMenuItem === item.id ? 12 : 8
                       }}
                       transition={{ 
-                        duration: 0.2, 
-                        ease: [0.25, 0.1, 0.25, 1],
-                        type: "tween"
+                        duration: 0.3, 
+                        ease: [0.16, 1, 0.3, 1],
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 30
                       }}
                       onClick={item.action}
-                      onHoverStart={() => setHoveredMenuItem(item.id)}
-                      onHoverEnd={() => setHoveredMenuItem(null)}
+                      onMouseEnter={() => handleMenuItemHover(item.id)}
+                      onMouseLeave={handleMenuItemLeave}
                       whileTap={{ 
                         scale: 0.92,
                         transition: { duration: 0.1 }
@@ -426,12 +454,15 @@ export default function DynamicIslandWidget() {
                       <AnimatePresence mode="wait">
                         {hoveredMenuItem === item.id && (
                           <motion.span
-                            initial={{ opacity: 0, x: -8 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -8 }}
+                            initial={{ opacity: 0, x: -6, scale: 0.9 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
+                            exit={{ opacity: 0, x: -6, scale: 0.9 }}
                             transition={{ 
-                              duration: 0.15,
-                              ease: [0.25, 0.1, 0.25, 1]
+                              duration: 0.25,
+                              ease: [0.16, 1, 0.3, 1],
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 25
                             }}
                             className="text-white text-ios-caption font-medium whitespace-nowrap ml-2"
                             style={{
