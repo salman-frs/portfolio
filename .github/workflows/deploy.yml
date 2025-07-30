@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy
     environment: PROD
+    permissions:
+      contents: read
+      deployments: write
     
     steps:
       - name: Checkout
@@ -42,8 +45,6 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: portfolio-website
           directory: out
-          # Optional: Git info for better deployment tracking
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           # Use latest wrangler version
           wranglerVersion: '3'
           # Only deploy on main branch pushes (not PRs)
