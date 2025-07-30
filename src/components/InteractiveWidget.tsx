@@ -345,27 +345,47 @@ export default function DynamicIslandWidget() {
                     <motion.a
                       href={item.href}
                       target="_blank"
-                      className="ios-button rounded-full flex items-center justify-center gap-2 overflow-hidden"
+                      className="ios-button rounded-full flex items-center justify-center overflow-hidden"
+                      initial={{ width: 32 }}
                       animate={{
-                        width: hoveredMenuItem === item.id ? 'auto' : '32px',
-                        paddingLeft: hoveredMenuItem === item.id ? 12 : 0,
-                        paddingRight: hoveredMenuItem === item.id ? 12 : 0
+                        width: hoveredMenuItem === item.id ? 'auto' : 32,
+                        paddingLeft: hoveredMenuItem === item.id ? 12 : 8,
+                        paddingRight: hoveredMenuItem === item.id ? 12 : 8
                       }}
-                      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                      transition={{ 
+                        duration: 0.2, 
+                        ease: [0.25, 0.1, 0.25, 1],
+                        type: "tween"
+                      }}
                       onHoverStart={() => setHoveredMenuItem(item.id)}
                       onHoverEnd={() => setHoveredMenuItem(null)}
-                      whileTap={{ scale: 0.9 }}
-                      style={{ height: '32px' }}
+                      whileTap={{ 
+                        scale: 0.92,
+                        transition: { duration: 0.1 }
+                      }}
+                      style={{ 
+                        height: 32,
+                        willChange: 'width, padding',
+                        backfaceVisibility: 'hidden',
+                        transform: 'translateZ(0)'
+                      }}
                     >
                       <item.icon className="ios-icon w-4 h-4 text-white flex-shrink-0" />
-                      <AnimatePresence>
+                      <AnimatePresence mode="wait">
                         {hoveredMenuItem === item.id && (
                           <motion.span
-                            initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: 'auto' }}
-                            exit={{ opacity: 0, width: 0 }}
-                            transition={{ duration: 0.2, delay: 0.05 }}
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -8 }}
+                            transition={{ 
+                              duration: 0.15,
+                              ease: [0.25, 0.1, 0.25, 1]
+                            }}
                             className="text-white text-ios-caption font-medium whitespace-nowrap ml-2"
+                            style={{
+                              willChange: 'opacity, transform',
+                              backfaceVisibility: 'hidden'
+                            }}
                           >
                             {item.label}
                           </motion.span>
@@ -374,29 +394,49 @@ export default function DynamicIslandWidget() {
                     </motion.a>
                   ) : (
                     <motion.button
-                      className="ios-button rounded-full flex items-center justify-center gap-2 overflow-hidden"
+                      className="ios-button rounded-full flex items-center justify-center overflow-hidden"
+                      initial={{ width: 32 }}
                       animate={{
-                        width: hoveredMenuItem === item.id ? 'auto' : '32px',
-                        paddingLeft: hoveredMenuItem === item.id ? 12 : 0,
-                        paddingRight: hoveredMenuItem === item.id ? 12 : 0
+                        width: hoveredMenuItem === item.id ? 'auto' : 32,
+                        paddingLeft: hoveredMenuItem === item.id ? 12 : 8,
+                        paddingRight: hoveredMenuItem === item.id ? 12 : 8
                       }}
-                      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                      transition={{ 
+                        duration: 0.2, 
+                        ease: [0.25, 0.1, 0.25, 1],
+                        type: "tween"
+                      }}
                       onClick={item.action}
                       onHoverStart={() => setHoveredMenuItem(item.id)}
                       onHoverEnd={() => setHoveredMenuItem(null)}
-                      whileTap={{ scale: 0.9 }}
+                      whileTap={{ 
+                        scale: 0.92,
+                        transition: { duration: 0.1 }
+                      }}
                       disabled={isTransitioning}
-                      style={{ height: '32px' }}
+                      style={{ 
+                        height: 32,
+                        willChange: 'width, padding',
+                        backfaceVisibility: 'hidden',
+                        transform: 'translateZ(0)'
+                      }}
                     >
                       <item.icon className="ios-icon w-4 h-4 text-white flex-shrink-0" />
-                      <AnimatePresence>
+                      <AnimatePresence mode="wait">
                         {hoveredMenuItem === item.id && (
                           <motion.span
-                            initial={{ opacity: 0, width: 0 }}
-                            animate={{ opacity: 1, width: 'auto' }}
-                            exit={{ opacity: 0, width: 0 }}
-                            transition={{ duration: 0.2, delay: 0.05 }}
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -8 }}
+                            transition={{ 
+                              duration: 0.15,
+                              ease: [0.25, 0.1, 0.25, 1]
+                            }}
                             className="text-white text-ios-caption font-medium whitespace-nowrap ml-2"
+                            style={{
+                              willChange: 'opacity, transform',
+                              backfaceVisibility: 'hidden'
+                            }}
                           >
                             {item.label}
                           </motion.span>
