@@ -70,10 +70,9 @@ export default function DynamicIslandWidget() {
   const handleMenuItemHover = useCallback((itemId: string) => {
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current)
+      hoverTimeoutRef.current = null
     }
-    hoverTimeoutRef.current = setTimeout(() => {
-      setHoveredMenuItem(itemId)
-    }, 50) // 50ms delay for smoother transitions
+    setHoveredMenuItem(itemId)
   }, [])
 
   const handleMenuItemLeave = useCallback(() => {
@@ -82,7 +81,7 @@ export default function DynamicIslandWidget() {
     }
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredMenuItem(null)
-    }, 100) // 100ms delay to prevent flickering
+    }, 150) // Only delay on leave to prevent accidental close
   }, [])
 
   // Clean iOS animations with improved layout
@@ -349,7 +348,13 @@ export default function DynamicIslandWidget() {
               initial="exit"
               animate="enter"
               exit="exit"
-              className="flex items-center gap-2"
+              className="flex items-center gap-3 px-2 py-1"
+              onMouseLeave={() => {
+                if (hoverTimeoutRef.current) {
+                  clearTimeout(hoverTimeoutRef.current)
+                }
+                setHoveredMenuItem(null)
+              }}
             >
               {[
                 { id: 'back', icon: ArrowLeft, label: 'Back', action: handleBackClick },
@@ -368,21 +373,17 @@ export default function DynamicIslandWidget() {
                       href={item.href}
                       target="_blank"
                       className="ios-button rounded-full flex items-center justify-center overflow-hidden"
-                      initial={{ width: 32 }}
                       animate={{
                         width: hoveredMenuItem === item.id ? 'auto' : 32,
                         paddingLeft: hoveredMenuItem === item.id ? 12 : 8,
                         paddingRight: hoveredMenuItem === item.id ? 12 : 8
                       }}
                       transition={{ 
-                        duration: 0.3, 
-                        ease: [0.16, 1, 0.3, 1],
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 30
+                        duration: 0.2, 
+                        ease: [0.4, 0, 0.2, 1],
+                        type: "tween"
                       }}
                       onMouseEnter={() => handleMenuItemHover(item.id)}
-                      onMouseLeave={handleMenuItemLeave}
                       whileTap={{ 
                         scale: 0.92,
                         transition: { duration: 0.1 }
@@ -398,15 +399,12 @@ export default function DynamicIslandWidget() {
                       <AnimatePresence mode="wait">
                         {hoveredMenuItem === item.id && (
                           <motion.span
-                            initial={{ opacity: 0, x: -6, scale: 0.9 }}
-                            animate={{ opacity: 1, x: 0, scale: 1 }}
-                            exit={{ opacity: 0, x: -6, scale: 0.9 }}
+                            initial={{ opacity: 0, x: -4 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -4 }}
                             transition={{ 
-                              duration: 0.25,
-                              ease: [0.16, 1, 0.3, 1],
-                              type: "spring",
-                              stiffness: 300,
-                              damping: 25
+                              duration: 0.15,
+                              ease: [0.4, 0, 0.2, 1]
                             }}
                             className="text-white text-ios-caption font-medium whitespace-nowrap ml-2"
                             style={{
@@ -422,22 +420,18 @@ export default function DynamicIslandWidget() {
                   ) : (
                     <motion.button
                       className="ios-button rounded-full flex items-center justify-center overflow-hidden"
-                      initial={{ width: 32 }}
                       animate={{
                         width: hoveredMenuItem === item.id ? 'auto' : 32,
                         paddingLeft: hoveredMenuItem === item.id ? 12 : 8,
                         paddingRight: hoveredMenuItem === item.id ? 12 : 8
                       }}
                       transition={{ 
-                        duration: 0.3, 
-                        ease: [0.16, 1, 0.3, 1],
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 30
+                        duration: 0.2, 
+                        ease: [0.4, 0, 0.2, 1],
+                        type: "tween"
                       }}
                       onClick={item.action}
                       onMouseEnter={() => handleMenuItemHover(item.id)}
-                      onMouseLeave={handleMenuItemLeave}
                       whileTap={{ 
                         scale: 0.92,
                         transition: { duration: 0.1 }
@@ -454,15 +448,12 @@ export default function DynamicIslandWidget() {
                       <AnimatePresence mode="wait">
                         {hoveredMenuItem === item.id && (
                           <motion.span
-                            initial={{ opacity: 0, x: -6, scale: 0.9 }}
-                            animate={{ opacity: 1, x: 0, scale: 1 }}
-                            exit={{ opacity: 0, x: -6, scale: 0.9 }}
+                            initial={{ opacity: 0, x: -4 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -4 }}
                             transition={{ 
-                              duration: 0.25,
-                              ease: [0.16, 1, 0.3, 1],
-                              type: "spring",
-                              stiffness: 300,
-                              damping: 25
+                              duration: 0.15,
+                              ease: [0.4, 0, 0.2, 1]
                             }}
                             className="text-white text-ios-caption font-medium whitespace-nowrap ml-2"
                             style={{
