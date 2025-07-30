@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { User, Plus, MoreHorizontal, ArrowLeft, FileText, Github, ExternalLink } from 'lucide-react'
+import { User, Plus, ArrowLeft, FileText, Github } from 'lucide-react'
 import { FaLinkedin } from 'react-icons/fa'
 
 type WidgetState = 'collapsed' | 'expanded' | 'audio' | 'menu'
@@ -19,8 +19,9 @@ export default function DynamicIslandWidget() {
   
   // Cleanup timeouts
   useEffect(() => {
+    const timeout = timeoutRef.current
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      if (timeout) clearTimeout(timeout)
     }
   }, [])
 
@@ -191,7 +192,7 @@ export default function DynamicIslandWidget() {
                   <User className="ios-icon w-3.5 h-3.5 text-white" />
                 </div>
                 <div className="text-left">
-                  <div className="text-white text-ios-caption opacity-70">Hello I'm</div>
+                  <div className="text-white text-ios-caption opacity-70">Hello I&apos;m</div>
                   <div className="text-white text-ios-footnote font-medium">Salman</div>
                 </div>
               </motion.button>
