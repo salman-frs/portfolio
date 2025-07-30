@@ -10,9 +10,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     name: Build and Deploy
-    
-    # Add environment for better secret management
-    environment: production
+    environment: PROD
     
     steps:
       - name: Checkout
