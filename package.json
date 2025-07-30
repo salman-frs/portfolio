@@ -9,14 +9,20 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "docker:build": "docker build -t portfolio-website .",
-    "docker:run": "docker run -p 3000:3000 portfolio-website"
+    "docker:run": "docker run -p 3000:3000 portfolio-website",
+    "pages:build": "npm run build",
+    "pages:deploy": "npx wrangler pages deploy out --commit-dirty=true",
+    "pages:dev": "npx wrangler pages dev out",
+    "cf:login": "npx wrangler login",
+    "cf:whoami": "npx wrangler whoami"
   },
   "dependencies": {
-    "next": "14.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@opennextjs/cloudflare": "^1.6.2",
     "framer-motion": "^10.16.0",
     "lucide-react": "^0.292.0",
+    "next": "^14.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.11.0"
   },
   "devDependencies": {
@@ -25,9 +31,10 @@
     "@types/react-dom": "^18.2.14",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.51.0",
-    "eslint-config-next": "14.0.0",
+    "eslint-config-next": "^14.2.0",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "wrangler": "^4.26.1"
   }
 }

@@ -1,0 +1,3 @@
+name = "portfolio-website"
+compatibility_date = "2025-07-31"
+pages_build_output_dir = "out"
