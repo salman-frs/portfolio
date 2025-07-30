@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply h-full bg-gradient-to-br from-gray-50 via-white to-gray-100 font-ios;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-synthesis: none;
+  }
+  
+  * {
+    @apply box-border;
+  }
+
+  body {
+    @apply antialiased text-gray-900;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: always;
+    overflow-x: hidden;
+  }
+
+  /* Better scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+@layer components {
+  /* Dynamic Island Inspired Widget */
+  .dynamic-island {
+    @apply relative rounded-full px-6 py-3;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 1px 2px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dynamic-island:hover {
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 2px 4px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+  }
+
+  /* Clean iOS Button Style */
+  .ios-button {
+    @apply relative inline-flex items-center justify-center;
+    @apply font-medium transition-all duration-200;
+    @apply rounded-full;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .ios-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .ios-button:active {
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(0.96);
+  }
+
+  .ios-button-primary {
+    background: #007AFF;
+    border: 1px solid #007AFF;
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+  }
+
+  .ios-button-primary:hover {
+    background: #0056CC;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+  }
+
+  .bg-ios-green {
+    background: #34C759 !important;
+    border: 1px solid #34C759 !important;
+  }
+
+  .bg-ios-green:hover {
+    background: #248A3D !important;
+    box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3) !important;
+  }
+
+  .bg-ios-orange {
+    background: #FF9500 !important;
+    border: 1px solid #FF9500 !important;
+  }
+
+  .bg-ios-orange:hover {
+    background: #CC7700 !important;
+    box-shadow: 0 2px 8px rgba(255, 149, 0, 0.3) !important;
+  }
+
+  /* Clean iOS Icon Style */
+  .ios-icon {
+    @apply flex-shrink-0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: all 0.2s ease;
+  }
+
+  .ios-icon:hover {
+    opacity: 0.7;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+  }
+
+  .text-glow-orange {
+    text-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+  }
+
+  .text-glow-blue {
+    text-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+  }
+
+  /* Improved focus states */
+  .button-primary:focus-visible {
+    outline: 2px solid rgba(16, 185, 129, 0.5);
+    outline-offset: 2px;
+  }
+
+  /* Better glass effect */
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+@layer utilities {
+  .animate-spin-3x {
+    animation: spin-smooth 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .backdrop-glass {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
