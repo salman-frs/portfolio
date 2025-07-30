@@ -75,14 +75,6 @@ export default function DynamicIslandWidget() {
     setHoveredMenuItem(itemId)
   }, [])
 
-  const handleMenuItemLeave = useCallback(() => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-    }
-    hoverTimeoutRef.current = setTimeout(() => {
-      setHoveredMenuItem(null)
-    }, 150) // Only delay on leave to prevent accidental close
-  }, [])
 
   // Clean iOS animations with improved layout
   const containerVariants = {
